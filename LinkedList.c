@@ -33,7 +33,7 @@ void insertAtEnd(struct Node** head, struct Node* newNode) {
         return;
     }
     // If the list is empty, set the new node as the head
-    else if (*head == NULL) {
+    else if (!*head) {
         *head = newNode;
         return;
 
@@ -41,7 +41,7 @@ void insertAtEnd(struct Node** head, struct Node* newNode) {
     // Traverse to the end of the list and insert the new node
     else {
         struct Node* current = *head;
-        while (current->next != NULL) {
+        while (current->next) {
             current = current->next;
         }
         current->next = newNode;
@@ -51,7 +51,7 @@ void insertAtEnd(struct Node** head, struct Node* newNode) {
 
 struct Node* createList(FILE* inf) {
     // Check for NULL file pointer
-    if (inf == NULL) {
+    if (!inf) {
         fprintf(stderr, "Input file is NULL\n");
         return NULL;
     }
@@ -74,4 +74,57 @@ struct Node* createList(FILE* inf) {
     }
 
     return head;
+}
+
+struct Node* removeNode(struct Node** head, int index) {
+
+    // Check for NULL head or empty list
+    if (!*head) {
+        fprintf(stderr, "Head is NULL\n");
+        return NULL;
+    }
+
+    // Check for NULL head pointer
+    if (!head) {
+        fprintf(stderr, "Head pointer is NULL\n");
+        return NULL;
+    }
+
+    // Check for negative index
+    if (index < 0) {
+        fprintf(stderr, "Negative index\n");
+        return NULL;
+    }
+
+    //Initialize current node and index
+    struct Node* current = *head;
+    int currentIndex = 0;
+
+    // If the index is 0, remove the head node
+    if (index == 0) {
+        // Update head to the next node
+        *head = current->next;
+        // Disconnect the old head from the list
+        current->next = NULL;
+        // Return the removed node  
+        return current;        
+    }
+
+    while (current->next && currentIndex < index) {
+        if (currentIndex == index - 1) {
+            // Disconnect the node from the list
+            struct Node* nodeToRemove = current->next;
+            current->next = nodeToRemove->next;
+            nodeToRemove->next = NULL;
+
+            return nodeToRemove;
+        }
+
+        current = current->next;
+        currentIndex++;
+    }
+
+    // If the index is out of bounds, return NULL
+    fprintf(stderr, "Index out of bounds\n");
+    return NULL;
 }
