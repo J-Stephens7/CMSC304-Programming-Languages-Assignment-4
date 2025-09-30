@@ -24,7 +24,7 @@ struct Node* createNode(char* data) {
     strcpy(newNode->data, data);
 
     return newNode;
-};
+}
 
 // Insert a new node at the end of the linked list
 void insertAtEnd(struct Node** head, struct Node* newNode) {
