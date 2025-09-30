@@ -18,7 +18,31 @@ int main(){
         }
     }
 
-    //Test your linked list functions here!!!
+    printf("File %s opened successfully\n", filename);
+
+    struct Node* head = createList(infile);
+
+    printf("Initial list:\n");
+    traverse(head);
+
+    freeNode(removeNode(&head, 1));
+
+    printf("After removing index 1:\n");
+    traverse(head);
+
+    freeNode(removeNode(&head, 0));
+
+    printf("After removing index 0:\n");
+    traverse(head);
+
+    freeNode(removeNode(NULL, 0));
+
+    freeList(&head);
+
+    printf("After freeing the list:\n");
+    traverse(head);
+
+
 
     fclose(infile);
 
